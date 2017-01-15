@@ -1,6 +1,5 @@
 #include <curses.h>
 #include <stdlib.h>
-#include <curses.h>
 
 FILE *abrir_arquivo(WINDOW*, const char*, const char*);
 void ler(WINDOW*, const char*);
