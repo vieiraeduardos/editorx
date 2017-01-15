@@ -1,4 +1,4 @@
-# editor
+#Editor
 Um simples editor de texto em C
 
 #Preview
