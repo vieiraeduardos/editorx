@@ -20,6 +20,7 @@ void executar_acao(WINDOW*, int);
 
 void fechar_janela(WINDOW*);
 void abrir(WINDOW*);
+void criar(WINDOW*);
 
 int main(int argc, char const *argv[]) {
 	WINDOW *w_menu;
@@ -105,7 +106,7 @@ void print_menu(WINDOW *w_menu, int selecionado)
 void executar_acao(WINDOW* w_menu, int selecionado) {
 	switch(selecionado) {
 		case 1:
-			/*Criar novo arquivo*/
+			criar(w_menu);
 		break;
 		case 2:
 			abrir(w_menu);
@@ -139,4 +140,13 @@ void abrir(WINDOW* janela) {
 
 	system(comando);
 
+}
+
+void criar(WINDOW* janela) {
+	char comando[] = "gcc createfile.c -o createfile -lncurses && ./createfile";
+
+	delwin(janela);
+	endwin();
+
+	system(comando);
 }
