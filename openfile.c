@@ -4,8 +4,6 @@
 FILE *abrir_arquivo(WINDOW*, const char*, const char*);
 void ler(WINDOW*, const char*);
 
-void compilar(char*);
-
 int main(void) {
 
     WINDOW *w_cabecalho;
@@ -32,19 +30,11 @@ int main(void) {
     wgetstr(w_cabecalho, nome_do_arquivo);
     wrefresh(w_cabecalho);
 
+    scrollok(w_editor, TRUE);
+
     ler(w_editor, nome_do_arquivo);
 
-    keypad(w_editor, TRUE);
-
-    while(1) {
-	int evento = wgetch(w_editor);
-
-	switch(evento) {
-		case KEY_F(5):
-		compilar(nome_do_arquivo);
-		break;
-	}
-    }
+    wgetch(w_editor);
 	
     delwin(w_cabecalho);
     delwin(w_editor);
@@ -102,14 +92,4 @@ FILE *abrir_arquivo(WINDOW* janela, const char* nome_do_arquivo, const char* mod
 	}
 
 	return file;
-}
-
-void compilar(char* nome_do_arquivo) {
-	char comando[255];
-
-	sprintf(comando, "gcc compilefile.c -o compilefile && ./compilefile %s", nome_do_arquivo);
-
-	endwin();
-
-	system(comando);
 }
