@@ -1,9 +1,7 @@
+#include <stdlib.h> 
 #include <curses.h>
-#include <stdlib.h>
 
-FILE* abrir_arquivo(const char*, const char*);
-void criar_arquivo(const char*);
-void escrever_no_arquivo(const char*, char*);
+#include "header/manipulatefile.h"
 
 int main(void) {
 
@@ -48,55 +46,4 @@ int main(void) {
     endwin();
 
     return 0;	
-}
-
-/*
- * Esta função abre um arquivo.
- * @param nome_do_arquivo representa o nome do arquivo;
- * @param modo representa o modo de acesso ao arquivo;
- *
- */
-
-FILE *abrir_arquivo(const char* nome_do_arquivo, const char* modo) {
-	FILE* file;
-
-	file = fopen(nome_do_arquivo, modo);
-
-	if(file == NULL) {
-		/*Mostra mensagem de error*/
-	}
-
-	return file;
-}
-
-/*
- * Esta função cria um novo arquivo.
- * @param nome_do_arquivo representa o nome do arquivo;
- *
- */
-
-void criar_arquivo(const char* nome_do_arquivo) {
-	FILE* file;
-
-	file = abrir_arquivo(nome_do_arquivo, "w");
-	
-        fclose(file);
-}
-
-/*
- * Esta função escreve em um arquivo.
- * @param nome_do_arquivo representa o nome do arquivo;
- * @param conteudo representa o conjunto de caracteres digitados;
- *
- */
-
-void escrever_no_arquivo(const char* nome_do_arquivo, char* conteudo) {
-	FILE* file;
-
-	file = abrir_arquivo(nome_do_arquivo, "a");
-
-	fputs(conteudo, file);
-
-	fclose(file);
-
 }

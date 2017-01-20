@@ -1,6 +1,8 @@
 #include <stdlib.h> 
 #include <curses.h>
 
+#include "header/manipulatefile.h"
+
 #define LARGURA 50
 #define ALTURA 20 
 
@@ -141,6 +143,8 @@ void fechar_janela(WINDOW* janela) {
 	delwin(janela);
 	endwin();
 
+	system("make clean");
+
 	exit(0);
 }
 
@@ -150,7 +154,7 @@ void fechar_janela(WINDOW* janela) {
  *
  */
 void abrir(WINDOW* janela) {
-	char comando[] = "gcc openfile.c -o openfile -lncurses && ./openfile";
+	char comando[] = "make openfile && ./openfile";
 
 	delwin(janela);
 	endwin();
@@ -167,7 +171,7 @@ void abrir(WINDOW* janela) {
  */
 
 void criar(WINDOW* janela) {
-	char comando[] = "gcc createfile.c -o createfile -lncurses && ./createfile";
+	char comando[] = "make createfile && ./createfile";
 
 	delwin(janela);
 	endwin();
