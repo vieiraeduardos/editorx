@@ -1,5 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include <stdlib.h> 
 #include <curses.h>
 
 #define LARGURA 50
@@ -15,9 +14,8 @@ char *escolhas[] = {
 		  };
 int n_escolhas = sizeof(escolhas) / sizeof(char *);
 
-void print_menu(WINDOW*, int);
+void imprimir_menu(WINDOW*, int);
 void executar_acao(WINDOW*, int);
-
 void fechar_janela(WINDOW*);
 void abrir(WINDOW*);
 void criar(WINDOW*);
@@ -25,33 +23,40 @@ void criar(WINDOW*);
 int main(int argc, char const *argv[]) {
 	WINDOW *w_menu;
 
-	int selecionado = 1;
-	int escolha = 0;
-	int evento;
+	int selecionado = 1; /*Representa a opção selecionada atual do usuário.*/
+	int evento; /*Representa o comando escolhido pelo usuário (criar, abrir, fechar, etc).*/
 
 	initscr();
 
-	noecho();
-	curs_set(0);
+	noecho(); /*Desabilita a visualização de caracteres na tela.*/
+	curs_set(0); /*Desabilita a visualização do cursor na tela.*/
 
+	/*Define a posição inicial x e y do menu na tela*/
 	x_inicial = (80 - LARGURA) / 2;
 	y_inicial = (24 - ALTURA) / 2;
 		
-	w_menu = newwin(ALTURA, LARGURA, y_inicial, x_inicial);
+	w_menu = newwin(ALTURA, LARGURA, y_inicial, x_inicial); /*Cria nova janela*/
 
-	start_color(); 
+	start_color(); /*Habilita o uso de cores*/
 
-    init_pair(1, COLOR_BLUE, COLOR_BLACK);
+	init_pair(1, COLOR_BLUE, COLOR_BLACK); /*Cria par de cor.*/
 
-    wbkgd(w_menu, COLOR_PAIR(1));
+	wbkgd(w_menu, COLOR_PAIR(1)); /*Define o background da janela com texto AZUL e fundo PRETO.*/
 
-	keypad(w_menu, TRUE);
+	keypad(w_menu, TRUE); /*Habilita o uso de comandos do teclado.*/
+	
+	/*Mostra uma mensagem para o usuário*/
+	if(argv[1] != NULL) {
+		mvprintw(0, 0, "%s", argv[1]);
+		refresh();
+	}
 
-	print_menu(w_menu, selecionado);
-
+	imprimir_menu(w_menu, selecionado);
+	
+	/*Mostra menu até que o usuário faça algo.*/
 	while(1){
 
-		evento = wgetch(w_menu);
+		evento = wgetch(w_menu); /*Captura evento no teclado.*/
 
 		switch(evento) {
 			case KEY_UP:
@@ -71,16 +76,19 @@ int main(int argc, char const *argv[]) {
 				break;
 		}
 
-		print_menu(w_menu, selecionado);
+		imprimir_menu(w_menu, selecionado);
 	}	
-
-	endwin();
 
 	return 0;
 }
 
-
-void print_menu(WINDOW *w_menu, int selecionado)
+/*
+ * Esta função imprime um menu de opções.
+ * @param w_menu representa uma janela com as opções para o usuário;
+ * @param selecionado representa a opção selecionado do menu;
+ *
+ */
+void imprimir_menu(WINDOW *w_menu, int selecionado)
 {
 	int x, y, i;	
 
@@ -103,6 +111,13 @@ void print_menu(WINDOW *w_menu, int selecionado)
 	wrefresh(w_menu);
 }
 
+/*
+ * Esta função executar uma ação dependendo da escolha do usuário.
+ * @param janela representa a janela principal;
+ * @param selecionado representa a opção selecionada do menu;
+ *
+ */
+
 void executar_acao(WINDOW* w_menu, int selecionado) {
 	switch(selecionado) {
 		case 1:
@@ -119,17 +134,19 @@ void executar_acao(WINDOW* w_menu, int selecionado) {
 
 /*
  * Esta função fechar uma janela.
- * @param janela represenata uma janela
+ * @param janela representa a janela principal;
  *
  */
 void fechar_janela(WINDOW* janela) {
 	delwin(janela);
 	endwin();
+
 	exit(0);
 }
 
 /*
- * Esta função abre uma tela para leitura de arquivo
+ * Esta função abre uma tela para leitura de arquivo.
+ * @param janela representa a janela principal;
  *
  */
 void abrir(WINDOW* janela) {
@@ -139,8 +156,15 @@ void abrir(WINDOW* janela) {
 	endwin();
 
 	system(comando);
-
+	
+	exit(0);
 }
+
+/*
+ * Esta função cria uma tela para escrita de arquivo.
+ * @param janela representa a janela principal;
+ *
+ */
 
 void criar(WINDOW* janela) {
 	char comando[] = "gcc createfile.c -o createfile -lncurses && ./createfile";
@@ -149,4 +173,6 @@ void criar(WINDOW* janela) {
 	endwin();
 
 	system(comando);
+
+	exit(0);
 }
