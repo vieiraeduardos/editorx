@@ -49,15 +49,14 @@ int main(int argc, char const *argv[]) {
 	
 	/*Mostra uma mensagem para o usuário*/
 	if(argv[1] != NULL) {
-		mvprintw(0, 0, "%s", argv[1]);
-		refresh();
+		mvwprintw(w_menu, 2, 7, "%s", argv[1]);
+		wrefresh(w_menu);
 	}
 
 	imprimir_menu(w_menu, selecionado);
 	
 	/*Mostra menu até que o usuário faça algo.*/
 	while(1){
-
 		evento = wgetch(w_menu); /*Captura evento no teclado.*/
 
 		switch(evento) {

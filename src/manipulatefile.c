@@ -34,7 +34,17 @@ FILE *abrir_arquivo(const char* nome_do_arquivo, const char* modo) {
 	file = fopen(nome_do_arquivo, modo);
 
 	if(file == NULL) {
-		/*Mostra mensagem de error*/
+		char comando[255];
+		char mensagem[255];
+		
+     	sprintf(mensagem, "Arquivo '%s' nao encontrado!", nome_do_arquivo);
+		sprintf(comando, "make main && ./main '%s'", mensagem);
+
+		endwin();
+
+		system(comando);
+	
+		exit(0);
 	}
 
 	return file;

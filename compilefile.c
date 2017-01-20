@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-void compilar(char*);
+void compilar(const char*);
 
 int main(int argv, char* argc[]) {
 	char nome_do_arquivo[255];
@@ -14,7 +14,12 @@ int main(int argv, char* argc[]) {
     	return 0;	
 }
 
-void compilar(char* nome_do_arquivo) {
+/*
+ * Esta função compila um arquivo.
+ * @param nome_do_arquivo representa o nome do arquivo a ser aberto;
+ *
+ */
+void compilar(const char* nome_do_arquivo) {
 	char comando[255];
 
 	sprintf(comando, "gcc %s && ./a.out", nome_do_arquivo);
