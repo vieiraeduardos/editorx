@@ -11,7 +11,9 @@ int main(int argv, char* argc[]) {
 
 	compilar(nome_do_arquivo); 
 
-    	return 0;	
+	getchar();
+
+    return 0;	
 }
 
 /*
@@ -21,8 +23,11 @@ int main(int argv, char* argc[]) {
  */
 void compilar(const char* nome_do_arquivo) {
 	char comando[255];
+	
+	system("clear");
 
 	sprintf(comando, "gcc %s && ./a.out", nome_do_arquivo);
 
 	system(comando);	
+
 }

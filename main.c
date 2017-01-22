@@ -3,12 +3,6 @@
 
 #include "header/manipulatefile.h"
 
-#define LARGURA 50
-#define ALTURA 20 
-
-int x_inicial = 0;
-int y_inicial = 0;
-
 char *escolhas[] = { 
 			"CRIAR NOVO ARQUIVO >>",
 			"ABRIR NOVO ARQUIVO >>",
@@ -28,22 +22,23 @@ int main(int argc, char const *argv[]) {
 	int selecionado = 1; /*Representa a opção selecionada atual do usuário.*/
 	int evento; /*Representa o comando escolhido pelo usuário (criar, abrir, fechar, etc).*/
 
-	initscr();
+	initscr(); /*Inicia o modo ncurses.*/
 
 	noecho(); /*Desabilita a visualização de caracteres na tela.*/
 	curs_set(0); /*Desabilita a visualização do cursor na tela.*/
 
-	/*Define a posição inicial x e y do menu na tela*/
-	x_inicial = (80 - LARGURA) / 2;
-	y_inicial = (24 - ALTURA) / 2;
-		
-	w_menu = newwin(ALTURA, LARGURA, y_inicial, x_inicial); /*Cria nova janela*/
+	int largura = 0; /*Guarda a largura da tela.*/
+	int altura = 0; /*Guarda a altura da tela.*/
+	
+	getmaxyx(stdscr, altura, largura); /*Obtem o a largura e altura do terminal*/
+
+	w_menu = newwin(altura, largura, 0, 0); /*Cria nova janela*/
 
 	start_color(); /*Habilita o uso de cores*/
 
-	init_pair(1, COLOR_BLUE, COLOR_BLACK); /*Cria par de cor.*/
+	init_pair(1, COLOR_WHITE, COLOR_BLACK); /*Cria par de cor.*/
 
-	wbkgd(w_menu, COLOR_PAIR(1)); /*Define o background da janela com texto AZUL e fundo PRETO.*/
+	wbkgd(w_menu, COLOR_PAIR(1)); /*Define o background da janela com texto BRANCO e fundo PRETO.*/
 
 	keypad(w_menu, TRUE); /*Habilita o uso de comandos do teclado.*/
 	
@@ -77,6 +72,10 @@ int main(int argc, char const *argv[]) {
 				break;
 		}
 
+		wclear(w_menu); /*Limpa a tela.*/
+		getmaxyx(stdscr, altura, largura);		
+		wresize(w_menu, altura, largura); /*Redemensiona a tela.*/
+
 		imprimir_menu(w_menu, selecionado);
 	}	
 
@@ -93,8 +92,10 @@ void imprimir_menu(WINDOW *w_menu, int selecionado)
 {
 	int x, y, i;	
 
-	x = 15;
-	y = 7;
+	getmaxyx(w_menu, y, x);
+
+	x = x * 0.4;
+	y = y * 0.4;
 
 	box(w_menu, 0, 0);
 	

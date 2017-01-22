@@ -12,13 +12,14 @@
  */
 
 void compilar(const char* nome_do_arquivo) {
-	char comando[] = "gcc compilefile.c -o compilefile && ./compilefile";
+	char comando[255];
+
+	sprintf(comando, "gcc compilefile.c -o compilefile && ./compilefile '%s'", nome_do_arquivo);
 
 	endwin();
 
 	system(comando);
-	
-	exit(0);	
+		
 }
 
 /*
@@ -34,17 +35,10 @@ FILE *abrir_arquivo(const char* nome_do_arquivo, const char* modo) {
 	file = fopen(nome_do_arquivo, modo);
 
 	if(file == NULL) {
-		char comando[255];
 		char mensagem[255];
 		
      	sprintf(mensagem, "Arquivo '%s' nao encontrado!", nome_do_arquivo);
-		sprintf(comando, "make main && ./main '%s'", mensagem);
-
-		endwin();
-
-		system(comando);
-	
-		exit(0);
+		voltar_para_menu_principal(mensagem);
 	}
 
 	return file;
@@ -84,10 +78,13 @@ void ler(WINDOW* janela, const char* nome_do_arquivo) {
 
 void criar_arquivo(const char* nome_do_arquivo) {
 	FILE* file;
+	char caminho[255];
 
-	file = abrir_arquivo(nome_do_arquivo, "w");
+	sprintf(caminho, "examples/%s", nome_do_arquivo);
+
+	file = abrir_arquivo(caminho, "w");
 	
-        fclose(file);
+    fclose(file);
 }
 
 /*
@@ -102,9 +99,27 @@ void escrever_no_arquivo(const char* nome_do_arquivo, char* conteudo) {
 
 	file = abrir_arquivo(nome_do_arquivo, "a");
 
-	fputs(conteudo, file);
+	fprintf(file, "%s\n", conteudo);
 
 	fclose(file);
 
+}
+
+/*
+ * Esta função faz retornarmos para o menu principal.
+ * @param mensagem representa uma mensagem para ser mostrada;
+ *
+ */
+
+void voltar_para_menu_principal(const char* mensagem) {
+		char comando[255];
+
+		sprintf(comando, "make main && ./main '%s'", mensagem);
+
+		endwin();
+
+		system(comando);
+	
+		exit(0);
 }
 
