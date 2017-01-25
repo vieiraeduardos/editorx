@@ -37,7 +37,7 @@ FILE *abrir_arquivo(const char* nome_do_arquivo, const char* modo) {
 	if(file == NULL) {
 		char mensagem[255];
 		
-     	sprintf(mensagem, "Arquivo '%s' nao encontrado!", nome_do_arquivo);
+     	sprintf(mensagem, "O arquivo \"%s\" nao foi encontrado!", nome_do_arquivo);
 		voltar_para_menu_principal(mensagem);
 	}
 
@@ -80,7 +80,7 @@ void criar_arquivo(const char* nome_do_arquivo) {
 	FILE* file;
 	char caminho[255];
 
-	sprintf(caminho, "examples/%s", nome_do_arquivo);
+	sprintf(caminho, "%s", nome_do_arquivo);
 
 	file = abrir_arquivo(caminho, "w");
 	
@@ -121,5 +121,37 @@ void voltar_para_menu_principal(const char* mensagem) {
 		system(comando);
 	
 		exit(0);
+}
+
+/**
+  * Esta função insere um caractere na lista.
+  * @param lista representa uma lista de caracteres;
+  * @param caractere representa o caractere;
+  * 
+  **/
+
+
+void inserir(struct lista* lista, char caractere) {
+	struct lista* tmp = NULL;
+
+	tmp = (struct lista*)malloc(sizeof(struct lista));
+
+	tmp->caractere = caractere;
+	tmp->proximo = NULL;
+
+	if(lista->proximo == NULL) {
+		tmp->anterior = lista;
+		lista->proximo = tmp;
+	} else {
+		struct lista* aux = lista->proximo;
+
+		while(aux->proximo != NULL) {
+			aux = aux->proximo;
+		}
+
+		tmp->anterior = aux;
+		aux->proximo = tmp;
+
+	}
 }
 

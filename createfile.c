@@ -26,7 +26,6 @@ int main(void) {
 
     w_cabecalho = newwin(4, largura, 0, 0); /*Cria uma nova janela.*/
     w_editor = newwin(20, largura - 5, 5, 2); /*Cria uma nova janela.*/
-
     
     start_color(); /*Habilita o uso de cores.*/
 

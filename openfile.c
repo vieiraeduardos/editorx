@@ -24,8 +24,16 @@ int main(void) {
 	getmaxyx(stdscr, altura, largura); /*Obtem o a largura e altura do terminal*/
 
     w_cabecalho = newwin(4, largura, 0, 0); /*Cria uma nova janela.*/
-    w_editor = newwin(20, largura - 5, 5, 2); /*Cria uma nova janela.*/
+    w_editor = newwin(altura - 5, largura - 5, 5, 2); /*Cria uma nova janela.*/
     
+	/*Inicia estrutura cursor*/
+	struct cursor* cursor = NULL;
+
+	cursor = malloc(sizeof(struct cursor));
+
+	cursor->x = 0;
+	cursor->y = 0;
+
     start_color(); /*Habilita o uso de cores.*/
 
     init_pair(1, COLOR_WHITE, COLOR_BLACK); /*Cria par de cor*/
@@ -66,9 +74,31 @@ int main(void) {
 			break;
 
 			case ESC:
-				voltar_para_menu_principal(NULL);
+				voltar_para_menu_principal("");
 			break;
+
+			case KEY_UP:
+					cursor->y--;
+					wmove(stdscr, cursor->y, cursor->x);
+					wrefresh(stdscr);
+					break;
+				case KEY_DOWN:
+					cursor->y++;
+					wmove(stdscr, cursor->y, cursor->x);
+					wrefresh(stdscr);
+					break;
+				case KEY_RIGHT:
+					cursor->x++;
+					wmove(stdscr, cursor->y, cursor->x);
+					wrefresh(stdscr);
+					break;
+				case KEY_LEFT:
+					cursor->x--;
+					wmove(stdscr, cursor->y, cursor->x);
+					wrefresh(stdscr);
+					break;
 		}
+
 		wclear(w_cabecalho); /*Limpa tela.*/
 		wclear(w_editor); /*Limpa tela.*/
 

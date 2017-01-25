@@ -44,7 +44,7 @@ int main(int argc, char const *argv[]) {
 	
 	/*Mostra uma mensagem para o usuário*/
 	if(argv[1] != NULL) {
-		mvwprintw(w_menu, 2, 7, "%s", argv[1]);
+		mvwprintw(w_menu, 2, 20, "%s", argv[1]);
 		wrefresh(w_menu);
 	}
 
