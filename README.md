@@ -1,16 +1,15 @@
-#Editor  
-Um simples editor de texto em C
+# EditorX  
+ EditorX is a simple text editor using ncurses to complete Programming Language.
 
-#Preview
+## Preview
 ![image](resources/images/editor.png?raw=true "Editor Preview")
 
 
-#Como usar?
-	Entre na pasta do projeto;
-
-	Execute o Makefile;
-		$ make
-
-	Execute o arquivo principal:
-		$ ./main
+## Running
+	$ make
+	$ ./main
+	
+	
+## License
+[GNU General Public License](https://github.com/euodeionomedeusuario/editorx/blob/master/LICENSE)
 
